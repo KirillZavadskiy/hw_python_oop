@@ -30,7 +30,6 @@ class Training:
     LEN_STEP: float = 0.65
     M_IN_KM: float = 1000
     MIN_IN_HOUR: float = 60.0
-    NUM_KMH_IN_MS = round((M_IN_KM / (MIN_IN_HOUR) ** 2), 3)
 
     def __init__(
                  self,
@@ -91,6 +90,7 @@ class SportsWalking(Training):
     RATE_WEIGHT_1: float = 0.035
     RATE_WEIGHT_2: float = 0.029
     HEIGHT_CENTIM_IN_METER: float = 100.0
+    NUM_KMH_IN_MS: float = 0.278
 
     def __init__(
                  self,
