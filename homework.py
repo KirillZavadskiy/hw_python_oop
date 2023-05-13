@@ -28,8 +28,9 @@ class Training:
     """Базовый класс тренировки."""
 
     LEN_STEP: float = 0.65
-    M_IN_KM: float = 1000
+    M_IN_KM: float = 1000.0
     MIN_IN_HOUR: float = 60.0
+    DEGREE: float = 2.0
 
     def __init__(
                  self,
@@ -90,7 +91,10 @@ class SportsWalking(Training):
     RATE_WEIGHT_1: float = 0.035
     RATE_WEIGHT_2: float = 0.029
     HEIGHT_CENTIM_IN_METER: float = 100.0
-    NUM_KMH_IN_MS: float = 0.278
+    NUM_KMH_IN_MS = (
+        round((Training.M_IN_KM
+               / (Training.MIN_IN_HOUR) ** Training.DEGREE), 3)
+        )
 
     def __init__(
                  self,
@@ -106,7 +110,8 @@ class SportsWalking(Training):
         """Расчет каллорий SportsWalking."""
         return (
                 (self.RATE_WEIGHT_1 * self.weight
-                 + (((self.get_mean_speed() * self.NUM_KMH_IN_MS) ** 2)
+                 + (((self.get_mean_speed()
+                      * self.NUM_KMH_IN_MS) ** self.DEGREE)
                     / (self.height / self.HEIGHT_CENTIM_IN_METER)
                     * self.RATE_WEIGHT_2 * self.weight))
                 * self.duration * self.MIN_IN_HOUR
