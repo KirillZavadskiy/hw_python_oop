@@ -52,7 +52,7 @@ class Training:
         """Получить количество затраченных калорий."""
         raise NotImplementedError(
             f'Метод get_spent_calories в классе {type(self).__name__} '
-            f'не переопределен.'
+            'не переопределен.'
         )
 
     def show_training_info(self) -> InfoMessage:
@@ -96,9 +96,8 @@ class SportsWalking(Training):
     RATE_WEIGHT_2: float = 0.029
     HEIGHT_CENTIM_IN_METER: float = 100.0
     DEGREE: float = 2.0
-    NUM_KMH_IN_MS = (
-        round(Training.M_IN_KM
-              / (Training.MIN_IN_HOUR) ** DEGREE, 3)
+    NUM_KMH_IN_MS = round(
+        Training.M_IN_KM / Training.MIN_IN_HOUR ** DEGREE, 3
     )
 
     def __init__(
@@ -118,16 +117,15 @@ class SportsWalking(Training):
                 self.RATE_WEIGHT_1
                 * self.weight
                 + (
-                  (
-                      (
-                          self.get_mean_speed()
-                          * self.NUM_KMH_IN_MS
-                      ) ** self.DEGREE
-                  )
+                    (
+                        self.get_mean_speed()
+                        * self.NUM_KMH_IN_MS
+                    )
+                    ** self.DEGREE
                     / (
                         self.height
                         / self.HEIGHT_CENTIM_IN_METER
-                  )
+                    )
                     * self.RATE_WEIGHT_2
                     * self.weight
                 )
@@ -179,7 +177,7 @@ def read_package(workout_type: str, data: list[int]) -> Training:
         'WLK': SportsWalking
     }
     if workout_type not in TRAINING_TYPE:
-        raise NameError(f'Тип тренировки {workout_type} отсутствует.')
+        raise ValueError(f'Тип тренировки {workout_type} отсутствует.')
     return TRAINING_TYPE[workout_type](*data)
 
 
